@@ -8,7 +8,7 @@ public class Patient {
 
     // 환자ID
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // 병원ID
     @ManyToOne
