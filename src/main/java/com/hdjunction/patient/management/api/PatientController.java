@@ -1,7 +1,9 @@
 package com.hdjunction.patient.management.api;
 
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
-import com.hdjunction.patient.management.service.PatientService;
+import com.hdjunction.patient.management.service.PatientCommandService;
+import com.hdjunction.patient.management.service.PatientQueryService;
+import com.hdjunction.patient.management.service.VisitQueryService;
 import com.hdjunction.patient.management.service.dto.FindingPatientResponse;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import com.hdjunction.patient.management.service.dto.UpdatingPatientFormRequest;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PatientController {
 
-    private PatientService patientService;
+    private PatientCommandService patientCommandService;
+    private PatientQueryService patientQueryService;
+    private VisitQueryService visitQueryService;
 
-    public PatientController(PatientService patientService) {
-        this.patientService = patientService;
+    public PatientController(PatientCommandService patientCommandService, PatientQueryService patientQueryService) {
+        this.patientCommandService = patientCommandService;
+        this.patientQueryService = patientQueryService;
     }
 
     /**
@@ -22,7 +27,7 @@ public class PatientController {
      */
     @GetMapping("/api/patients/{id}")
     public FindingPatientResponse findPatient(@PathVariable Long id) {
-        return patientService.findPatient(id);
+        return new FindingPatientResponse(patientQueryService.findPatient(id), visitQueryService.findAllByPatientId(id));
     }
 
     /**
@@ -30,7 +35,7 @@ public class PatientController {
      */
     @PostMapping("/api/patients")
     public ResponseEntity<Void> registerPatient(@RequestBody RegisteringPatientFormRequest request) {
-        Long id = patientService.registerPatient(request);
+        Long id = patientCommandService.registerPatient(request);
         return ResponseEntity.created(ResourceLocationBuilder.build(id)).build();
     }
 
@@ -39,7 +44,7 @@ public class PatientController {
      */
     @PatchMapping("/api/patients/{id}")
     public ResponseEntity<Void> updatePatient(@PathVariable Long id, @RequestBody UpdatingPatientFormRequest request) {
-        patientService.update(id, request);
+        patientCommandService.updatePatient(id, request);
         return ResponseEntity.ok().build();
     }
 
@@ -48,7 +53,7 @@ public class PatientController {
      */
     @DeleteMapping("/api/patients/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
-        patientService.delete(id);
+        patientCommandService.deletePatient(id);
         return ResponseEntity.ok().build();
     }
 }
