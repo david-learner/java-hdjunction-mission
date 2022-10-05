@@ -1,4 +1,4 @@
-package com.hdjunction.patient.management.api.dto;
+package com.hdjunction.patient.management.service.dto;
 
 import com.hdjunction.patient.management.domain.Hospital;
 

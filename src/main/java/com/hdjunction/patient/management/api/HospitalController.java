@@ -1,8 +1,8 @@
 package com.hdjunction.patient.management.api;
 
-import com.hdjunction.patient.management.api.dto.RegisteringHospitalFormRequest;
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
-import com.hdjunction.patient.management.repository.HospitalRepository;
+import com.hdjunction.patient.management.service.HospitalCommandService;
+import com.hdjunction.patient.management.service.dto.RegisteringHospitalFormRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HospitalController {
 
-    private HospitalRepository hospitalRepository;
+    private final HospitalCommandService hospitalCommandService;
 
-    public HospitalController(HospitalRepository hospitalRepository) {
-        this.hospitalRepository = hospitalRepository;
+    public HospitalController(HospitalCommandService hospitalCommandService) {
+        this.hospitalCommandService = hospitalCommandService;
     }
 
     /**
@@ -22,7 +22,7 @@ public class HospitalController {
      */
     @PostMapping("/api/hospitals")
     public ResponseEntity<Void> registerHospital(@RequestBody RegisteringHospitalFormRequest request) {
-        Long id = hospitalRepository.save(request.toHospital()).getId();
+        Long id = hospitalCommandService.registerHospital(request);
         return ResponseEntity.created(ResourceLocationBuilder.build(id)).build();
     }
 }
