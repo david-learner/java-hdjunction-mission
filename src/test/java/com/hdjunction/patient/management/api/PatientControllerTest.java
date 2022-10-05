@@ -27,16 +27,16 @@ public class PatientControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private PatientCommandService patientCommandService;
+    private PatientService patientService;
 
     @Test
     void 환자정보를_등록한다() throws Exception {
-        RegisteringPatientFormRequest form = new RegisteringPatientFormRequest(1L, "홍길동", "M", "910203", "01012345678");
-        given(patientCommandService.registerPatient(any())).willReturn(1L);
+        RegisteringPatientFormRequest request = new RegisteringPatientFormRequest(1L, "홍길동", "M", "910203", "01012345678");
+        given(patientService.registerPatient(any())).willReturn(1L);
 
         this.mockMvc.perform(post("/api/patients")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(form)))
+                        .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
                 .andExpect(header().string(HttpHeaders.LOCATION, containsString("/api/patients")))
                 .andExpect(status().isCreated());

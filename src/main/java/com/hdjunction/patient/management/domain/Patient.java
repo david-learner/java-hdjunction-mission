@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 // 환자
 @Entity
@@ -33,7 +34,6 @@ public class Patient {
     @Column(length = 20)
     private String mobilePhoneNumber;
 
-
     protected Patient() {
     }
 
@@ -45,7 +45,49 @@ public class Patient {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
 
+    public void update(Patient patient) {
+        if (Objects.nonNull(patient.hospital)) {
+            this.hospital = patient.hospital;
+        }
+        if (Objects.nonNull(patient.name)) {
+            this.name = patient.name;
+        }
+        if (Objects.nonNull(patient.sexCode)) {
+            this.sexCode = patient.sexCode;
+        }
+        if (Objects.nonNull(patient.dateOfBirth)) {
+            this.dateOfBirth = patient.dateOfBirth;
+        }
+        if (Objects.nonNull(patient.mobilePhoneNumber)) {
+            this.mobilePhoneNumber = patient.mobilePhoneNumber;
+        }
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public String getSexCode() {
+        return sexCode;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
     }
 }

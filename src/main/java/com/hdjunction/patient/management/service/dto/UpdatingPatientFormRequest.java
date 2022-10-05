@@ -3,7 +3,7 @@ package com.hdjunction.patient.management.service.dto;
 import com.hdjunction.patient.management.domain.Hospital;
 import com.hdjunction.patient.management.domain.Patient;
 
-public class RegisteringPatientFormRequest {
+public class UpdatingPatientFormRequest {
 
     // 병원 ID
     private Long hospitalId;
@@ -16,14 +16,14 @@ public class RegisteringPatientFormRequest {
     // 휴대전화번호
     private String mobilePhoneNumber;
 
-    private RegisteringPatientFormRequest() {
+    private UpdatingPatientFormRequest() {
     }
 
-    public RegisteringPatientFormRequest(Long hospitalId,
-                                         String patientName,
-                                         String sexCode,
-                                         String dateOfBirth,
-                                         String mobilePhoneNumber) {
+    public UpdatingPatientFormRequest(Long hospitalId,
+                                      String patientName,
+                                      String sexCode,
+                                      String dateOfBirth,
+                                      String mobilePhoneNumber) {
         this.hospitalId = hospitalId;
         this.patientName = patientName;
         this.sexCode = sexCode;
