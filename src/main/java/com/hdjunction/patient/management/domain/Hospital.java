@@ -23,10 +23,25 @@ public class Hospital {
     protected Hospital() {
     }
 
-    public Hospital(Long id, String name, String nursingInstitutionNumber, String directorName) {
-        this.id = id;
+    public Hospital(String name, String nursingInstitutionNumber, String directorName) {
         this.name = name;
         this.nursingInstitutionNumber = nursingInstitutionNumber;
         this.directorName = directorName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNursingInstitutionNumber() {
+        return nursingInstitutionNumber;
+    }
+
+    public String getDirectorName() {
+        return directorName;
     }
 }
