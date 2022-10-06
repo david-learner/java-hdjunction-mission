@@ -2,6 +2,7 @@ package com.hdjunction.patient.management.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 // 환자방문
 @Entity
@@ -13,11 +14,9 @@ public class Visit {
     private Long id;
     // 병원 ID
     @ManyToOne
-    @JoinColumn(unique = true)
     private Hospital hospital;
     // 환자 ID
     @ManyToOne
-    @JoinColumn(unique = true)
     private Patient patient;
     // 접수일시
     @Column(nullable = false)
@@ -34,6 +33,19 @@ public class Visit {
         this.patient = patient;
         this.receiptDateTime = receiptDateTime;
         this.statusCode = statusCode;
+    }
+
+    public Visit(String statusCode) {
+        this.hospital = null;
+        this.patient = null;
+        this.receiptDateTime = null;
+        this.statusCode = statusCode;
+    }
+
+    public void update(Visit visit) {
+        if (Objects.nonNull(visit.statusCode)) {
+            this.statusCode = visit.statusCode;
+        }
     }
 
     public Long getId() {

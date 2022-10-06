@@ -1,7 +1,7 @@
 package com.hdjunction.patient.management.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hdjunction.patient.management.api.dto.RegisteringHospitalFormRequest;
+import com.hdjunction.patient.management.service.dto.RegisteringHospitalFormRequest;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import com.hdjunction.patient.management.service.dto.UpdatingPatientFormRequest;
 import org.junit.jupiter.api.Test;

@@ -17,9 +17,10 @@ public class PatientController {
     private PatientQueryService patientQueryService;
     private VisitQueryService visitQueryService;
 
-    public PatientController(PatientCommandService patientCommandService, PatientQueryService patientQueryService) {
+    public PatientController(PatientCommandService patientCommandService, PatientQueryService patientQueryService, VisitQueryService visitQueryService) {
         this.patientCommandService = patientCommandService;
         this.patientQueryService = patientQueryService;
+        this.visitQueryService = visitQueryService;
     }
 
     /**

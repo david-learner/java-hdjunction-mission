@@ -1,15 +1,17 @@
 package com.hdjunction.patient.management.service.dto;
 
-public class RegisteringVisitRequest {
+import com.hdjunction.patient.management.domain.Visit;
+
+public class VisitRequest {
 
     private Long patientId;
     // todo default code
     private String statusCode = "1";
 
-    private RegisteringVisitRequest() {
+    private VisitRequest() {
     }
 
-    public RegisteringVisitRequest(Long patientId, String statusCode) {
+    public VisitRequest(Long patientId, String statusCode) {
         this.patientId = patientId;
         this.statusCode = statusCode;
     }
@@ -20,5 +22,9 @@ public class RegisteringVisitRequest {
 
     public String getStatusCode() {
         return statusCode;
+    }
+
+    public Visit toVisit() {
+        return new Visit(this.statusCode);
     }
 }
