@@ -2,7 +2,7 @@ package com.hdjunction.patient.management.service;
 
 import com.hdjunction.patient.management.domain.Visit;
 import com.hdjunction.patient.management.repository.VisitRepository;
-import com.hdjunction.patient.management.service.dto.VisitResponse;
+import com.hdjunction.patient.management.api.dto.VisitFlatDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +20,14 @@ public class VisitQueryService {
     }
 
     /**
-     *  하나의 내원내역을 조회한다
+     * 하나의 내원내역을 조회한다
      */
-    public VisitResponse findById(Long id) {
-        Visit visit = visitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("내원정보가 존재하지 않습니다."));
-        return new VisitResponse(visit);
+    public Visit findById(Long id) {
+        return visitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("내원정보가 존재하지 않습니다."));
     }
 
     /**
-     *  여러 개의 내원내역을 조회한다
+     * 여러 개의 내원내역을 조회한다
      */
     public List<Visit> findAllByPatientId(Long id) {
         return visitRepository.findAllByPatientId(id);

@@ -1,10 +1,10 @@
 package com.hdjunction.patient.management.api;
 
+import com.hdjunction.patient.management.api.dto.VisitFlatDto;
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
 import com.hdjunction.patient.management.service.VisitCommandService;
 import com.hdjunction.patient.management.service.VisitQueryService;
 import com.hdjunction.patient.management.service.dto.VisitRequest;
-import com.hdjunction.patient.management.service.dto.VisitResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +23,8 @@ public class VisitController {
      * 내원정보를 조회한다
      */
     @GetMapping("/api/visits/{id}")
-    public VisitResponse findVisit(@PathVariable Long id) {
-        return visitQueryService.findById(id);
+    public VisitFlatDto findVisit(@PathVariable Long id) {
+        return new VisitFlatDto(visitQueryService.findById(id));
     }
 
     /**

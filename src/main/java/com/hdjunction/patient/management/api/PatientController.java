@@ -1,14 +1,18 @@
 package com.hdjunction.patient.management.api;
 
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
+import com.hdjunction.patient.management.domain.Patient;
+import com.hdjunction.patient.management.domain.Visit;
 import com.hdjunction.patient.management.service.PatientCommandService;
 import com.hdjunction.patient.management.service.PatientQueryService;
 import com.hdjunction.patient.management.service.VisitQueryService;
-import com.hdjunction.patient.management.service.dto.FindingPatientResponse;
+import com.hdjunction.patient.management.api.dto.FindingPatientResponse;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import com.hdjunction.patient.management.service.dto.UpdatingPatientFormRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PatientController {
@@ -28,7 +32,9 @@ public class PatientController {
      */
     @GetMapping("/api/patients/{id}")
     public FindingPatientResponse findPatient(@PathVariable Long id) {
-        return new FindingPatientResponse(patientQueryService.findPatient(id), visitQueryService.findAllByPatientId(id));
+        Patient patient = patientQueryService.findPatient(id);
+        List<Visit> visits = visitQueryService.findAllByPatientId(id);
+        return new FindingPatientResponse(patient, visits);
     }
 
     /**
