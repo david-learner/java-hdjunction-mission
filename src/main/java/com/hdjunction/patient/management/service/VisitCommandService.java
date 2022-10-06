@@ -38,4 +38,11 @@ public class VisitCommandService {
         Visit visit = visitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("내원정보가 존재하지 않습니다."));
         visit.update(request.toVisit());
     }
+
+    /**
+     * 내원정보를 삭제한다
+     */
+    public void deleteVisit(Long id) {
+        visitRepository.deleteById(id);
+    }
 }

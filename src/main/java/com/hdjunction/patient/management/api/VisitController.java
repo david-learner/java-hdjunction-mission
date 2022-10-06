@@ -44,4 +44,13 @@ public class VisitController {
         visitCommandService.updateVisit(id, request);
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 내원정보를 삭제한다
+     */
+    @DeleteMapping("/api/visits/{id}")
+    public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
+        visitCommandService.deleteVisit(id);
+        return ResponseEntity.ok().build();
+    }
 }
