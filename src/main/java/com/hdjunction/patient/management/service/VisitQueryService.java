@@ -19,11 +19,17 @@ public class VisitQueryService {
         this.visitRepository = visitRepository;
     }
 
+    /**
+     *  하나의 내원내역을 조회한다
+     */
     public VisitResponse findById(Long id) {
         Visit visit = visitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("내원정보가 존재하지 않습니다."));
         return new VisitResponse(visit);
     }
 
+    /**
+     *  여러 개의 내원내역을 조회한다
+     */
     public List<Visit> findAllByPatientId(Long id) {
         return visitRepository.findAllByPatientId(id);
     }

@@ -47,6 +47,9 @@ public class PatientCommandService {
         patient.update(request.toPatient(hospital));
     }
 
+    /**
+     *  환자정보를 삭제한다
+     */
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
     }

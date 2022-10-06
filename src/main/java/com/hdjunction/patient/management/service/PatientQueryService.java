@@ -18,7 +18,7 @@ public class PatientQueryService {
     }
 
     /**
-     * 환자정보를 조회한다
+     * 하나의 환자정보를 조회한다
      */
     public Patient findPatient(Long id) {
         return patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 환자정보입니다."));

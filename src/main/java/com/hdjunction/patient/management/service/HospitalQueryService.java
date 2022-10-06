@@ -17,6 +17,9 @@ public class HospitalQueryService {
         this.hospitalRepository = hospitalRepository;
     }
 
+    /**
+     *  하나의 병원정보를 조회한다
+     */
     public Hospital findHospital(Long id) {
         return hospitalRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 병원입니다."));
     }
