@@ -1,7 +1,7 @@
 package com.hdjunction.patient.management.repository;
 
 import com.hdjunction.patient.management.domain.Patient;
-import com.hdjunction.patient.management.repository.dto.ICustomPatientFlatDto;
+import com.hdjunction.patient.management.repository.dto.CustomPatientFlatDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,5 +23,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
                 ) as vi
                 on vi.patient_id = p.id where vi.rank = 1
             """, nativeQuery = true)
-    List<ICustomPatientFlatDto> findAllPatientsWithRecentReceiptDateTime();
+    List<CustomPatientFlatDto> findAllPatientsWithRecentReceiptDateTime();
 }
