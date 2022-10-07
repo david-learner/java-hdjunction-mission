@@ -47,10 +47,12 @@ public class PatientController {
     public List<CustomPatientDto> findAllPatients(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String registrationNumber,
-            @RequestParam(required = false) String dateOfBirth
+            @RequestParam(required = false) String dateOfBirth,
+            @RequestParam(required = false) Integer pageSize,
+            @RequestParam(required = false) Integer pageNo
     ) {
-        PatientSearchCondition condition = new PatientSearchCondition(name, registrationNumber, dateOfBirth);
-        return patientQueryService.search(condition);
+        PatientSearchCondition condition = new PatientSearchCondition(name, registrationNumber, dateOfBirth, pageSize, pageNo);
+        return patientQueryService.search(condition).getContent();
     }
 
     /**

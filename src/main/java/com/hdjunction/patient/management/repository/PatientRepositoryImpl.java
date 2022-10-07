@@ -5,6 +5,9 @@ import com.hdjunction.patient.management.repository.dto.PatientSearchCondition;
 import com.hdjunction.patient.management.repository.dto.QCustomPatientDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -22,8 +25,9 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
     }
 
     @Override
-    public List<CustomPatientDto> search(PatientSearchCondition condition) {
-        return jpaQueryFactory
+    public Page<CustomPatientDto> search(PatientSearchCondition condition, Pageable pageable) {
+
+        List<CustomPatientDto> patients = jpaQueryFactory
                 .select(new QCustomPatientDto(
                         patient.name,
                         patient.registrationNumber,
@@ -36,22 +40,35 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
                 .leftJoin(recentReceiptDateTime)
                 .on(patient.id.eq(recentReceiptDateTime.id))
                 .where(
-                        patientNameEq(condition.getName()),
-                        registrationNumberEq(condition.getRegistrationNumber()),
-                        dateOfBirthEq(condition.getDateOfBirth())
+                        patientNameContains(condition.getName()),
+                        registrationNumberContains(condition.getRegistrationNumber()),
+                        dateOfBirthContains(condition.getDateOfBirth())
                 )
+                .offset(getOffset(pageable))
+                .limit(getPageSize(pageable))
+                .orderBy(patient.name.asc())
                 .fetch();
+
+        return new PageImpl<>(patients, pageable, patients.size());
     }
 
-    private BooleanExpression patientNameEq(String patientName) {
-        return hasText(patientName) ? patient.name.eq(patientName) : null;
+    private long getOffset(Pageable pageable) {
+        return pageable != null ? pageable.getOffset() : null;
     }
 
-    private BooleanExpression registrationNumberEq(String registrationNumber) {
-        return hasText(registrationNumber) ? patient.registrationNumber.eq(registrationNumber) : null;
+    private long getPageSize(Pageable pageable) {
+        return pageable != null ? pageable.getPageSize() : null;
     }
 
-    private BooleanExpression dateOfBirthEq(String dateOfBirth) {
-        return hasText(dateOfBirth) ? patient.dateOfBirth.eq(dateOfBirth) : null;
+    private BooleanExpression patientNameContains(String patientName) {
+        return hasText(patientName) ? patient.name.contains(patientName) : null;
+    }
+
+    private BooleanExpression registrationNumberContains(String registrationNumber) {
+        return hasText(registrationNumber) ? patient.registrationNumber.contains(registrationNumber) : null;
+    }
+
+    private BooleanExpression dateOfBirthContains(String dateOfBirth) {
+        return hasText(dateOfBirth) ? patient.dateOfBirth.contains(dateOfBirth) : null;
     }
 }
