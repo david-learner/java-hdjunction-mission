@@ -1,5 +1,6 @@
 package com.hdjunction.patient.management.api;
 
+import com.hdjunction.patient.management.api.dto.ApiResponse;
 import com.hdjunction.patient.management.api.dto.FindingPatientResponse;
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
 import com.hdjunction.patient.management.domain.Patient;
@@ -12,6 +13,7 @@ import com.hdjunction.patient.management.service.VisitQueryService;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import com.hdjunction.patient.management.service.dto.UpdatingPatientFormRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,22 +46,22 @@ public class PatientController {
      * 환자정보는 이름, 환자등록번호, 성별, 생년월일, 휴대전화, 최근방문일을 포함한다.
      */
     @GetMapping("/api/patients")
-    public List<CustomPatientDto> findAllPatients(
+    public ResponseEntity<ApiResponse<List<CustomPatientDto>>> findAllPatients(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String registrationNumber,
             @RequestParam(required = false) String dateOfBirth,
-            @RequestParam(required = false) Integer pageSize,
-            @RequestParam(required = false) Integer pageNo
+            @RequestParam(required = false) Integer pageNo,
+            @RequestParam(required = false) Integer pageSize
     ) {
         PatientSearchCondition condition = new PatientSearchCondition(name, registrationNumber, dateOfBirth, pageSize, pageNo);
-        return patientQueryService.search(condition).getContent();
+        return ResponseEntity.ok(ApiResponse.success(patientQueryService.search(condition).getContent()));
     }
 
     /**
      * 환자정보를 등록한다
      */
     @PostMapping("/api/patients")
-    public ResponseEntity<Void> registerPatient(@RequestBody RegisteringPatientFormRequest request) {
+    public ResponseEntity<Void> registerPatient(@Validated @RequestBody RegisteringPatientFormRequest request) {
         Long id = patientCommandService.registerPatient(request);
         return ResponseEntity.created(ResourceLocationBuilder.build(id)).build();
     }
