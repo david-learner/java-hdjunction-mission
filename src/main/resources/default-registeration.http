@@ -1,0 +1,80 @@
+### 병원정보 등록
+POST http://localhost:8080/api/hospitals
+Content-Type: application/json
+
+{
+  "hospitalName": "서울아산병원",
+  "nursingInstitutionNumber": "11100800",
+  "directorName": "박승일"
+}
+
+### 환자정보 등록1
+POST http://localhost:8080/api/patients
+Content-Type: application/json
+
+{
+  "hospitalId": 1,
+  "patientName": "김길동",
+  "sexCode": "M",
+  "dateOfBirth": "1991-02-03",
+  "mobilePhoneNumber": "01012345678"
+}
+
+### 환자정보 등록2
+POST http://localhost:8080/api/patients
+Content-Type: application/json
+
+{
+  "hospitalId": 1,
+  "patientName": "나길동",
+  "sexCode": "M",
+  "dateOfBirth": "1991-02-03",
+  "mobilePhoneNumber": "01012345678"
+}
+
+### 환자정보 등록3
+POST http://localhost:8080/api/patients
+Content-Type: application/json
+
+{
+  "hospitalId": 1,
+  "patientName": "다길동",
+  "sexCode": "M",
+  "dateOfBirth": "1991-02-03",
+  "mobilePhoneNumber": "01012345678"
+}
+
+### 내원정보 등록1
+POST http://localhost:8080/api/visits
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "statusCode": 3
+}
+
+### 내원정보 등록2
+POST http://localhost:8080/api/visits
+Content-Type: application/json
+
+{
+  "patientId": 2,
+  "statusCode": 3
+}
+
+### 내원정보 등록3
+POST http://localhost:8080/api/visits
+Content-Type: application/json
+
+{
+  "patientId": 3,
+  "statusCode": 3
+}
+
+### 내원정보 수정
+PATCH http://localhost:8080/api/visits/1
+Content-Type: application/json
+
+{
+  "statusCode": 2
+}
