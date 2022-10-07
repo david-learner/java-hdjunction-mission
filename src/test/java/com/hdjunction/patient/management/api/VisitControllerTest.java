@@ -2,7 +2,8 @@ package com.hdjunction.patient.management.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hdjunction.patient.management.service.VisitCommandService;
-import com.hdjunction.patient.management.service.dto.RegisteringVisitRequest;
+import com.hdjunction.patient.management.service.VisitQueryService;
+import com.hdjunction.patient.management.service.dto.VisitRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,10 +29,13 @@ public class VisitControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private VisitCommandService visitCommandService;
+    @MockBean
+    private VisitQueryService visitQueryService;
+
 
     @Test
-    void 환자정보를_등록한다() throws Exception {
-        RegisteringVisitRequest request = new RegisteringVisitRequest(1L, "1");
+    void 내원정보를_등록한다() throws Exception {
+        VisitRequest request = new VisitRequest(1L, "1");
         given(visitCommandService.registerVisit(any())).willReturn(1L);
 
         this.mockMvc.perform(post("/api/visits")

@@ -2,6 +2,8 @@ package com.hdjunction.patient.management.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hdjunction.patient.management.service.PatientCommandService;
+import com.hdjunction.patient.management.service.PatientQueryService;
+import com.hdjunction.patient.management.service.VisitQueryService;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +29,22 @@ public class PatientControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private PatientService patientService;
+    private PatientCommandService patientCommandService;
+    @MockBean
+    private PatientQueryService patientQueryService;
+    @MockBean
+    private VisitQueryService visitQueryService;
 
     @Test
     void 환자정보를_등록한다() throws Exception {
         RegisteringPatientFormRequest request = new RegisteringPatientFormRequest(1L, "홍길동", "M", "910203", "01012345678");
-        given(patientService.registerPatient(any())).willReturn(1L);
+        given(patientCommandService.registerPatient(any())).willReturn(1L);
 
         this.mockMvc.perform(post("/api/patients")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
-                .andExpect(header().string(HttpHeaders.LOCATION, containsString("/api/patients")))
+                .andExpect(header().string(HttpHeaders.LOCATION, containsString("/api/patients/")))
                 .andExpect(status().isCreated());
     }
 }
