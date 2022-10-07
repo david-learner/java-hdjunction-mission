@@ -2,9 +2,11 @@ package com.hdjunction.patient.management.service;
 
 import com.hdjunction.patient.management.domain.Patient;
 import com.hdjunction.patient.management.repository.PatientRepository;
+import com.hdjunction.patient.management.repository.dto.ICustomPatientFlatDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -22,5 +24,12 @@ public class PatientQueryService {
      */
     public Patient findPatient(Long id) {
         return patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 환자정보입니다."));
+    }
+
+    /**
+     * 전체 환자정보를 조회한다
+     */
+    public List<ICustomPatientFlatDto> findAllPatientsWithRecentReceiptDateTime() {
+        return patientRepository.findAllPatientsWithRecentReceiptDateTime();
     }
 }

@@ -1,12 +1,13 @@
 package com.hdjunction.patient.management.api;
 
+import com.hdjunction.patient.management.api.dto.FindingPatientResponse;
 import com.hdjunction.patient.management.api.util.ResourceLocationBuilder;
 import com.hdjunction.patient.management.domain.Patient;
 import com.hdjunction.patient.management.domain.Visit;
 import com.hdjunction.patient.management.service.PatientCommandService;
 import com.hdjunction.patient.management.service.PatientQueryService;
 import com.hdjunction.patient.management.service.VisitQueryService;
-import com.hdjunction.patient.management.api.dto.FindingPatientResponse;
+import com.hdjunction.patient.management.repository.dto.ICustomPatientFlatDto;
 import com.hdjunction.patient.management.service.dto.RegisteringPatientFormRequest;
 import com.hdjunction.patient.management.service.dto.UpdatingPatientFormRequest;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,15 @@ public class PatientController {
         Patient patient = patientQueryService.findPatient(id);
         List<Visit> visits = visitQueryService.findAllByPatientId(id);
         return new FindingPatientResponse(patient, visits);
+    }
+
+    /**
+     * 전체 환자정보를 조회한다.
+     * 환자정보는 이름, 환자등록번호, 성별, 생년월일, 휴대전화, 최근방문일을 포함한다.
+     */
+    @GetMapping("/api/patients")
+    public List<ICustomPatientFlatDto> findAllPatients() {
+        return patientQueryService.findAllPatientsWithRecentReceiptDateTime();
     }
 
     /**

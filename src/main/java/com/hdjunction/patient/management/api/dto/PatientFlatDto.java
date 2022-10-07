@@ -4,8 +4,8 @@ import com.hdjunction.patient.management.domain.Patient;
 
 public class PatientFlatDto {
 
-    private Long patientId;
-    private String patientName;
+    private Long id;
+    private String name;
     private String registrationNumber;
     private String sexCode;
     private String dateOfBirth;
@@ -13,8 +13,8 @@ public class PatientFlatDto {
     private HospitalFlatDto hospital;
 
     public PatientFlatDto(Patient patient) {
-        this.patientId = patient.getId();
-        this.patientName = patient.getName();
+        this.id = patient.getId();
+        this.name = patient.getName();
         this.registrationNumber = patient.getRegistrationNumber();
         this.sexCode = patient.getSexCode();
         this.dateOfBirth = patient.getDateOfBirth();
@@ -22,12 +22,12 @@ public class PatientFlatDto {
         this.hospital = new HospitalFlatDto(patient.getHospital());
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Long getId() {
+        return id;
     }
 
-    public String getPatientName() {
-        return patientName;
+    public String getName() {
+        return name;
     }
 
     public String getRegistrationNumber() {
